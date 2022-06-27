@@ -18,17 +18,17 @@ function init() {
     // dropdownMenu.append("option").text(ID_names[i]);
     };
     createBar(ID_names[0]);
+    createBubble(ID_names[0])
 
-
-d3.selectAll("#selDataset").on("change", optionChanged);
-    
-    function optionChanged(){
-    // code that updates graphics
+    d3.selectAll("#selDataset").on("change", function(optionChanged){
         let dp_menu = d3.select("#selDataset");
         let dp_ID = dp_menu.property("value");
         console.log(dp_ID);
         createBar(dp_ID);
-    };
+        createBubble(dp_ID)
+
+    });
+    
 };
 
     function createBar(dp_ID){
@@ -47,7 +47,7 @@ d3.selectAll("#selDataset").on("change", optionChanged);
                 type: 'bar',
                 x: sample_values,
                 y: otu_ids,
-                text: otu_labels,
+                yaxis: otu_labels,
                 transforms: [{
                 type: 'sort',
                 target: 'x',
@@ -64,5 +64,37 @@ d3.selectAll("#selDataset").on("change", optionChanged);
     // checking to see if function is running
         console.log(`This function generates bar chart of ${dp_ID} `);
     };
+
+    // Function to create a bubble chart at a specific id
+    function createBubble(dp_ID){
+        for (let i = 0; i < ID_names.length; i++){
+        // finds the index where the current id is
+        if (dp_ID == ID_names[i]){
+            // Stores OTU data at current id
+            let sample_values = samples[i].sample_values;
+            let otu_ids = samples[i].otu_ids;
+            let otu_labels = samples[i].otu_labels;
+            // Sets up the data for bubble chart at current id
+            let data2 = [{
+            x: otu_ids,
+            y: sample_values,
+            xaxis: "OTU_ID",
+            mode: 'markers',
+            text: otu_labels,
+            marker: {
+                size: sample_values,
+                color: otu_ids
+            }
+            }];
+            //Creates the bar chart with plotly at id='bar'
+            Plotly.newPlot("bubble", data2);
+            //Exits the loop
+            break;
+        };
+        };
+        // checking to see if function is running
+        console.log(`This function generates bubble plot of ${dp_ID} `);
+  };
+
     init();
 });
