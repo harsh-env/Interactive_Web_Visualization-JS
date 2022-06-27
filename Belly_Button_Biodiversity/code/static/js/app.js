@@ -136,15 +136,16 @@ function init() {
                       type: "indicator",
                       mode: "gauge+number",
                       value: wash_freq,
-                      title: { 'text': "Belly Button Washing Frequency", font: { size: 24 } },
+                      title: { text: "<b>Belly Button Washing Frequency</b><br></br> Scrubs per Week" },
                       
                     //   delta: { reference: 0, increasing: { color: "greygreen" } },
                       gauge: {
-                        axis: { range: [null, 10], tickwidth: 2, tickcolor: "black" },
+                        axis: { range: [null, 10], dtick:"1", tickwidth: 2, tickcolor: "black" },
                         bar: { 'color': "black", 'width':.2 },
                         bgcolor: "white",
                         borderwidth: 1,
                         bordercolor: "gray",
+                        // colorscale:"Earth",
                         steps: [
                           { range: [0, 1], color: "white" },
                           { range: [1, 2], color: "lightyellow" },
@@ -168,11 +169,11 @@ function init() {
                   
                   var layout = {
                     width: 500,
-                    height: 400,
-                    margin: { t: 30, r: 25, l: 25, b: 25 },
+                    height: 500,
+                    margin: { t: 25, r: 25, l: 25, b: 25 },
                     paper_bgcolor: "white",
                     font: { color: "black", family: "Arial" },
-                    title:{text: "Scrubs per Week", font: { size: 16 }},
+                    
                   };
                   
                   Plotly.newPlot('gauge', data3, layout);
