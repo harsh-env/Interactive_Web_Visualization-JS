@@ -133,25 +133,34 @@ function init() {
                 let data3 = [
                     {
                       type: "indicator",
-                      mode: "gauge+number+delta",
+                      mode: "gauge+number",
                       value: wash_freq,
-                      title: { text: "Belly Button Washing Frequency", font: { size: 24 } },
-                      delta: { reference: 8, increasing: { color: "greygreen" } },
+                      title: { 'text': "Belly Button Washing Frequency", font: { size: 24 } },
+                      
+                    //   delta: { reference: 0, increasing: { color: "greygreen" } },
                       gauge: {
-                        axis: { range: [null, 10], tickwidth: 1, tickcolor: "darkblue" },
-                        bar: { color: "darkblue" },
+                        axis: { range: [null, 10], tickwidth: 2, tickcolor: "black" },
+                        bar: { 'color': "black", 'width':.2 },
                         bgcolor: "white",
-                        borderwidth: 2,
+                        borderwidth: 1,
                         bordercolor: "gray",
                         steps: [
-                          { range: [0, 250], color: "cyan" },
-                          { range: [250, 400], color: "royalblue" }
+                          { range: [0, 1], color: "white" },
+                          { range: [1, 2], color: "lightyellow" },
+                          { range: [2, 3], color: "lightblue" },
+                          { range: [3, 4], color: "lightgreen" },
+                          { range: [4, 5], color: "yellow" },
+                          { range: [5, 6], color: "green" },
+                          { range: [6, 7], color: "violet" },
+                          { range: [7, 8], color: "indigo" },
+                          { range: [8, 9], color: "purple" },
+                          { range: [9, 10], color: "blue" },
                         ],
-                        threshold: {
-                          line: { color: "red", width: 4 },
-                          thickness: 0.75,
-                          value: 490
-                        }
+                        // threshold: {
+                        //   line: { color: "red", width: 10 },
+                        //   thickness: 0.75,
+                        //   value: 490
+                        // }
                       }
                     }
                   ];
@@ -159,9 +168,10 @@ function init() {
                   var layout = {
                     width: 500,
                     height: 400,
-                    margin: { t: 25, r: 25, l: 25, b: 25 },
+                    margin: { t: 30, r: 25, l: 25, b: 25 },
                     paper_bgcolor: "white",
-                    font: { color: "darkblue", family: "Arial" }
+                    font: { color: "black", family: "Arial" },
+                    title:{text: "Scrubs per Week", font: { size: 16 }},
                   };
                   
                   Plotly.newPlot('gauge', data3, layout);
