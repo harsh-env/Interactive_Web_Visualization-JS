@@ -20,6 +20,7 @@ function init() {
     createBar(ID_names[0]);
     createBubble(ID_names[0])
     createSummary(ID_names[0])
+    crgaugechart(ID_names[0])
 
     d3.selectAll("#selDataset").on("change", function(){
         let dp_menu = d3.select("#selDataset");
@@ -28,6 +29,7 @@ function init() {
         createBar(dp_ID);
         createBubble(dp_ID)
         createSummary(dp_ID)
+        crgaugechart(dp_ID)
 
     });
     
@@ -92,7 +94,7 @@ function init() {
             yaxis:{title: "Sample Values"},
 
             }
-            //Creates the bar chart with plotly at id='bar'
+            //Creates the bar chart with plotly with id='bubble'
             Plotly.newPlot("bubble", data2, layout);
             //Exits the loop
             break;
@@ -120,6 +122,54 @@ function init() {
         // checking to see if function is running
         console.log(`This function generates summary info of ${dp_ID} `);
       };
+
+    function crgaugechart(dp_ID){
+        for (let i = 0; i < ID_names.length; i++){
+            // finds the index where the current id is
+            if (dp_ID == ID_names[i]){
+                // Stores OTU data at current id
+                let wash_freq = metadata[i].wfreq;
+            
+                let data3 = [
+                    {
+                      type: "indicator",
+                      mode: "gauge+number+delta",
+                      value: wash_freq,
+                      title: { text: "Belly Button Washing Frequency", font: { size: 24 } },
+                      delta: { reference: 8, increasing: { color: "greygreen" } },
+                      gauge: {
+                        axis: { range: [null, 10], tickwidth: 1, tickcolor: "darkblue" },
+                        bar: { color: "darkblue" },
+                        bgcolor: "white",
+                        borderwidth: 2,
+                        bordercolor: "gray",
+                        steps: [
+                          { range: [0, 250], color: "cyan" },
+                          { range: [250, 400], color: "royalblue" }
+                        ],
+                        threshold: {
+                          line: { color: "red", width: 4 },
+                          thickness: 0.75,
+                          value: 490
+                        }
+                      }
+                    }
+                  ];
+                  
+                  var layout = {
+                    width: 500,
+                    height: 400,
+                    margin: { t: 25, r: 25, l: 25, b: 25 },
+                    paper_bgcolor: "white",
+                    font: { color: "darkblue", family: "Arial" }
+                  };
+                  
+                  Plotly.newPlot('gauge', data3, layout);
+                
+            }
+
+        }
+    }
 
     init();
 });
