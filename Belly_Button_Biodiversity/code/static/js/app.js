@@ -19,13 +19,15 @@ function init() {
     };
     createBar(ID_names[0]);
     createBubble(ID_names[0])
+    createSummary(ID_names[0])
 
-    d3.selectAll("#selDataset").on("change", function(optionChanged){
+    d3.selectAll("#selDataset").on("change", function(){
         let dp_menu = d3.select("#selDataset");
         let dp_ID = dp_menu.property("value");
         console.log(dp_ID);
         createBar(dp_ID);
         createBubble(dp_ID)
+        createSummary(dp_ID)
 
     });
     
@@ -78,7 +80,6 @@ function init() {
             let data2 = [{
             x: otu_ids,
             y: sample_values,
-            xaxis: "OTU_ID",
             mode: 'markers',
             text: otu_labels,
             marker: {
@@ -86,15 +87,39 @@ function init() {
                 color: otu_ids
             }
             }];
+            let layout = {
+            xaxis:{title: "OTU_ID"},
+            yaxis:{title: "Sample Values"},
+
+            }
             //Creates the bar chart with plotly at id='bar'
-            Plotly.newPlot("bubble", data2);
+            Plotly.newPlot("bubble", data2, layout);
             //Exits the loop
             break;
         };
         };
         // checking to see if function is running
         console.log(`This function generates bubble plot of ${dp_ID} `);
-  };
+    };
+
+    function createSummary(dp_ID){
+        d3.select("#sample-metadata").selectAll("p").remove();
+        for (let i = 0; i < ID_names.length; i++){
+          // finds the index where the current id is
+          if (dp_ID == ID_names[i]){
+            // code that sets up demographic info at id='sample-meta'
+            d3.select("#sample-metadata").append("p").text(`id: ${metadata[i].id}`);
+            d3.select("#sample-metadata").append("p").text(`ethnicity: ${metadata[i].ethnicity}`);
+            d3.select("#sample-metadata").append("p").text(`gender: ${metadata[i].gender}`);
+            d3.select("#sample-metadata").append("p").text(`age: ${metadata[i].age}`);
+            d3.select("#sample-metadata").append("p").text(`location: ${metadata[i].location}`);
+            d3.select("#sample-metadata").append("p").text(`bbtype: ${metadata[i].bbtype}`);
+            d3.select("#sample-metadata").append("p").text(`wfreq: ${metadata[i].wfreq}`);
+          };
+        };
+        // checking to see if function is running
+        console.log(`This function generates summary info of ${dp_ID} `);
+      };
 
     init();
 });
