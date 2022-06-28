@@ -38,12 +38,15 @@ function optionChanged(value) {
     crgaugechart(value)
 // };
 }
+// Create Bar Charts on init and on slecting from dropdownmenu
 function createBar(dp_ID){
   for (let i = 0; i < ID_names.length; i++){
     // finds the index where the current id is
     if (dp_ID == ID_names[i]){
-      // Stores top 10 OTU data at current id
-      let sample_values = samples[i].sample_values.slice(0, 10);
+      // Sorting, slicing and reversing the sample Values for current ID
+      let samp_val_sort = samples[i].sample_values.sort((a, b) => b.sample_values - a.sample_values);
+      let sample_values1 = samp_val_sort.slice(0, 10)
+      let sample_values = sample_values1.reverse()
       let temp = samples[i].otu_ids.slice(0, 10);
       let otu_ids = temp.map(function (x) {
         return "OTU " + x;
@@ -55,11 +58,11 @@ function createBar(dp_ID){
         x: sample_values,
         y: otu_ids,
         yaxis: otu_labels,
-        transforms: [{
-          type: 'sort',
-          target: 'x',
-          order: 'ascending'
-        }],
+        // transforms: [{
+        //   type: 'sort',
+        //   target: 'x',
+        //   order: 'ascending'
+        // }],
         orientation: 'h'
       }];
       //Creates the bar chart with plotly at id='bar'
