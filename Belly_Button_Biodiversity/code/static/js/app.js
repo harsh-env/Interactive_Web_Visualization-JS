@@ -19,7 +19,7 @@ function init() {
     let dropdownMenu = d3.select("#selDataset");
     for (let i = 0; i < ID_names.length; i++){
       dropdownMenu.append("option").text(ID_names[i]).attr("value", ID_names[i]);
-      // dropdownMenu.append("option").text(ID_names[i]);
+      
     };
     createBar(ID_names[0]);
     createBubble(ID_names[0])
@@ -28,15 +28,10 @@ function init() {
   });
 }    
 function optionChanged(value) {
-  // d3.selectAll("#selDataset").on("change", function(){
-  //   let dp_menu = d3.select("#selDataset");
-  //   let dp_ID = dp_menu.property("value");
-  //   console.log(dp_ID);
-    createBar(value);
+     createBar(value);
     createBubble(value)
     createSummary(value)
     crgaugechart(value)
-// };
 }
 // Create Bar Charts on init and on slecting from dropdownmenu
 function createBar(dp_ID){
@@ -58,11 +53,6 @@ function createBar(dp_ID){
         x: sample_values,
         y: otu_ids,
         yaxis: otu_labels,
-        // transforms: [{
-        //   type: 'sort',
-        //   target: 'x',
-        //   order: 'ascending'
-        // }],
         orientation: 'h'
       }];
       //Creates the bar chart with plotly at id='bar'
@@ -184,7 +174,4 @@ function crgaugechart(dp_ID){
     }
   }
 }
-
-
-
 init();
